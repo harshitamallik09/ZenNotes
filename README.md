@@ -2,6 +2,10 @@
 
 A cozy, full-stack note-taking web application built with **Python, Flask, SQLite, HTML, CSS, and JavaScript**. ZenNotes helps users organize their thoughts in a simple, personal space with a warm sunflower-inspired interface.
 
+## 📸 Preview
+
+![ZenNotes Dashboard](screenshots/dashboard.jpeg)
+
 ## ✨ Features
 
 - **User Authentication:** Sign up, log in, and log out securely, with password hashing.
