@@ -1,0 +1,1492 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Trebuchet MS", Arial, sans-serif;
+    background-color: #eae1bd;
+    color: #21170b;
+    line-height: 1.6;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+/* Logo panel */
+
+.site-header {
+    padding: 55px 9% 0;
+    position: relative;
+    z-index: 2;
+}
+
+.logo-box {
+    width: min(470px, 100%);
+    background-color: #f1d79b;
+    padding: 5px 25px;
+    border-radius: 18px;
+    box-shadow: 0 7px 9px rgba(50, 38, 12, 0.25);
+}
+
+.logo-box h1 {
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: clamp(42px, 6vw, 64px);
+    font-weight: bold;
+    letter-spacing: -3px;
+    text-align: center;
+    color: #080603;
+    text-shadow: 2px 4px 3px rgba(0, 0, 0, 0.2);
+}
+
+/* Sunflower decorations */
+
+/* Hand-drawn sunflower decorations */
+
+
+.sunflower {
+    position: absolute;
+    z-index: 0;
+    width: 400px;
+    height: auto;
+    pointer-events: none;
+    object-fit: contain;
+}
+
+
+
+.sunflower-top {
+    top: -15px;
+    right: -35px;
+    transform: rotate(-15deg);
+}
+
+.sunflower-bottom {
+    top: 300px;
+    left: -100px;
+    transform: rotate(20deg);
+}
+
+
+/* Main layout */
+
+main {
+    width: min(1000px, 88%);
+    margin: 60px auto 0;
+    position: relative;
+    z-index: 1;
+}
+
+/* Welcome card */
+
+.welcome-card {
+    width: min(620px, 100%);
+    min-height: 300px;
+    margin: 0 auto 100px;
+    padding: 35px 30px;
+    border-radius: 18px;
+    background-color: #f1d79b;
+    text-align: center;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 22px;
+}
+
+.welcome-card h2 {
+    font-size: clamp(21px, 3vw, 27px);
+    line-height: 1.4;
+}
+
+.welcome-card p {
+    max-width: 430px;
+    font-size: 17px;
+    line-height: 1.8;
+    color: #4d3a1c;
+}
+
+/* Buttons */
+
+.create-button,
+.small-add-button {
+    display: inline-block;
+    text-decoration: none;
+    text-align: center;
+    color: #21170b;
+    background-color: #f7ce63;
+    border: 1px solid #e9ac00;
+    border-radius: 40px;
+    box-shadow: 0 5px 8px rgba(70, 50, 10, 0.2);
+    transition: transform 0.2s ease,
+                box-shadow 0.2s ease;
+}
+
+.create-button {
+    padding: 12px 30px;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.small-add-button {
+    padding: 9px 18px;
+    font-size: 14px;
+    white-space: nowrap;
+}
+
+.create-button:hover,
+.small-add-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 12px rgba(70, 50, 10, 0.25);
+}
+
+/* Saved notes area */
+
+.notes-section {
+    padding-bottom: 50px;
+    scroll-margin-top: 25px;
+}
+
+.notes-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    margin-bottom: 25px;
+}
+
+.notes-heading h2 {
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: clamp(23px, 3vw, 31px);
+    margin-bottom: 5px;
+}
+
+.notes-heading p {
+    color: #65563b;
+    font-size: 15px;
+}
+
+/* Grid of individual note boxes */
+
+.notes-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 22px;
+}
+
+.note-card {
+    background-color: #f8e8bd;
+    border: 1px solid #e5cf98;
+    border-radius: 16px;
+    padding: 22px;
+    min-height: 140px;
+    box-shadow: 0 4px 10px rgba(65, 48, 15, 0.08);
+    overflow-wrap: anywhere;
+    transition: transform 0.2s ease,
+                box-shadow 0.2s ease;
+}
+
+.note-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 16px rgba(65, 48, 15, 0.13);
+}
+
+.note-card h3 {
+    font-size: 19px;
+    margin-bottom: 10px;
+    color: #684714;
+}
+
+.note-card p {
+    font-size: 15px;
+    color: #51442d;
+    white-space: pre-wrap;
+}
+
+/* Empty state */
+
+.empty-notes {
+    text-align: center;
+    padding: 45px 20px;
+    border: 2px dashed #d5bd80;
+    border-radius: 18px;
+    background-color: rgba(248, 232, 189, 0.55);
+}
+
+.empty-notes span {
+    display: block;
+    font-size: 42px;
+    margin-bottom: 10px;
+}
+
+.empty-notes h3 {
+    font-size: 21px;
+    margin-bottom: 8px;
+}
+
+.empty-notes p {
+    color: #65563b;
+    margin-bottom: 16px;
+}
+
+.empty-notes a {
+    color: #684714;
+    font-weight: bold;
+}
+
+/* Footer */
+
+footer {
+    text-align: center;
+    padding: 25px 15px;
+    color: #756341;
+    font-size: 14px;
+}
+
+/* Mobile screens */
+
+@media (max-width: 600px) {
+    .site-header {
+        padding: 30px 6% 0;
+    }
+
+    .logo-box {
+        width: 85%;
+        padding: 8px 15px;
+    }
+
+    .logo-box h1 {
+        letter-spacing: -2px;
+    }
+
+    main {
+        width: 88%;
+        margin-top: 45px;
+    }
+
+    .welcome-card {
+        min-height: 270px;
+        margin-bottom: 70px;
+        padding: 28px 20px;
+        gap: 18px;
+    }
+
+    .notes-heading {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .notes-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+    .sunflower-top {
+        right: -90px;
+        top: 20px;
+        font-size: 125px;
+    }
+
+    .sunflower-bottom {
+        left: -80px;
+        top: 390px;
+        font-size: 125px;
+    }
+}
+
+.note-date {
+    font-size: 12px;
+    color: #8a744c;
+    margin-bottom: 8px;
+    letter-spacing: 0.5px;
+}
+
+.note-card .note-content {
+    font-size: 15px;
+    color: #51442d;
+    white-space: pre-wrap;
+}
+
+/* Logo link */
+
+.logo-link {
+    display: inline-block;
+    text-decoration: none;
+}
+
+/* Create Note page */
+
+.editor-main {
+    width: min(760px, 88%);
+    margin: 35px auto 0;
+    position: relative;
+    z-index: 1;
+}
+
+.back-link {
+    display: inline-block;
+    margin-bottom: 22px;
+    color: #684714;
+    font-size: 15px;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.back-link:hover {
+    text-decoration: underline;
+}
+
+/* Main editor panel */
+
+.editor-card {
+    background-color: #f1d79b;
+    border: 1px solid #e5cf98;
+    border-radius: 22px;
+    padding: 35px;
+    box-shadow: 0 7px 18px rgba(65, 48, 15, 0.08);
+}
+
+.editor-heading {
+    text-align: center;
+    margin-bottom: 32px;
+}
+
+.editor-flower {
+    display: inline-block;
+    color: #a66b16;
+    font-size: 32px;
+    margin-bottom: 5px;
+}
+
+.editor-heading h2 {
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: clamp(25px, 4vw, 34px);
+    line-height: 1.4;
+    margin-bottom: 10px;
+}
+
+.editor-heading p {
+    color: #65502d;
+    font-size: 15px;
+}
+
+/* Form fields */
+
+.note-form {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+}
+
+.form-group label {
+    color: #493719;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    border: 1px solid #d7bd80;
+    border-radius: 12px;
+    padding: 15px 16px;
+    background-color: #fff9e9;
+    color: #21170b;
+    font-family: inherit;
+    font-size: 15px;
+    line-height: 1.7;
+    outline: none;
+    transition: border-color 0.2s ease,
+                box-shadow 0.2s ease;
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+    color: #9a8968;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    border-color: #c18a20;
+    box-shadow: 0 0 0 3px rgba(193, 138, 32, 0.15);
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 200px;
+}
+
+/* Form buttons */
+
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 14px;
+    flex-wrap: wrap;
+    margin-top: 4px;
+}
+
+.cancel-button,
+.save-button {
+    font-family: inherit;
+    font-size: 15px;
+    font-weight: bold;
+    border-radius: 40px;
+    padding: 12px 23px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: transform 0.2s ease,
+                box-shadow 0.2s ease;
+}
+
+.cancel-button {
+    color: #684714;
+    background-color: transparent;
+    border: 1px solid #c9a968;
+}
+
+.save-button {
+    color: #21170b;
+    background-color: #f7ce63;
+    border: 1px solid #e9ac00;
+    box-shadow: 0 4px 8px rgba(70, 50, 10, 0.15);
+}
+
+.cancel-button:hover,
+.save-button:hover {
+    transform: translateY(-2px);
+}
+
+/* Quote below the editor */
+
+.editor-quote {
+    text-align: center;
+    color: #756341;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 16px;
+    font-style: italic;
+    margin: 28px 0 40px;
+}
+
+/* Mobile layout */
+
+@media (max-width: 600px) {
+    .editor-main {
+        margin-top: 25px;
+    }
+
+    .editor-card {
+        padding: 24px 18px;
+        border-radius: 18px;
+    }
+
+    .editor-heading {
+        margin-bottom: 25px;
+    }
+
+    .form-actions {
+        justify-content: stretch;
+    }
+
+    .cancel-button,
+    .save-button {
+        flex: 1;
+        text-align: center;
+    }
+}
+
+/* ZenNotes success popup */
+
+
+.toast-container {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: min(420px, 90%);
+    z-index: 99999;
+    pointer-events: none;
+}
+
+.toast {
+    pointer-events: auto;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 18px;
+    border-radius: 15px;
+    background: #fff9e9;
+    border: 1px solid #d9bd79;
+    box-shadow: 0 8px 25px rgba(65, 48, 15, 0.18);
+    color: #493719;
+    font-size: 15px;
+    animation: toast-appear 0.35s ease-out;
+}
+
+.toast-success {
+    border-left: 5px solid #8a9b55;
+}
+
+.toast-icon {
+    color: #8a9b55;
+    font-size: 24px;
+}
+
+.toast-close {
+    margin-left: auto;
+    border: none;
+    background: transparent;
+    color: #756341;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+@keyframes toast-appear {
+    from {
+        opacity: 0;
+        transform: translateY(-12px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Note card three-dot menu */
+
+.note-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 8px;
+}
+
+.note-card-header .note-date {
+    margin-bottom: 0;
+}
+
+.note-menu-wrapper {
+    position: relative;
+    flex-shrink: 0;
+}
+
+.note-menu-button {
+    width: 32px;
+    height: 32px;
+    border: none;
+    border-radius: 50%;
+    background: transparent;
+    color: #684714;
+    font-size: 25px;
+    line-height: 1;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s ease;
+}
+
+.note-menu-button:hover {
+    background: #efdbab;
+}
+
+.note-menu {
+    display: none;
+    position: absolute;
+    top: 36px;
+    right: 0;
+    width: 175px;
+    padding: 6px;
+    background: #fff9e9;
+    border: 1px solid #e5cf98;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(65, 48, 15, 0.16);
+    z-index: 20;
+}
+
+.note-menu.show {
+    display: block;
+}
+
+.note-menu-item {
+    display: block;
+    width: 100%;
+    padding: 10px 12px;
+    border: none;
+    border-radius: 8px;
+    background: transparent;
+    text-align: left;
+    font-family: inherit;
+    font-size: 14px;
+    color: #493719;
+    cursor: pointer;
+}
+
+.note-menu-item:hover {
+    background: #f1e3bf;
+}
+
+.note-menu-item.delete-option {
+    color: #a33d32;
+}
+
+/* Opened note page */
+
+.note-card {
+    cursor: pointer;
+}
+
+.note-card:focus-visible {
+    outline: 2px solid #a66b16;
+    outline-offset: 3px;
+}
+
+.view-note-card {
+    cursor: default;
+}
+
+.view-note-title {
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: clamp(26px, 4vw, 36px);
+    color: #684714;
+    margin: 12px 0 22px;
+    overflow-wrap: anywhere;
+}
+
+.view-note-content {
+    color: #51442d;
+    font-size: 16px;
+    line-height: 1.9;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+}
+
+/* Cute ZenNotes delete confirmation popup */
+.delete-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background: rgba(55, 42, 22, 0.42);
+    backdrop-filter: blur(4px);
+}
+
+.delete-modal-card {
+    width: 100%;
+    max-width: 410px;
+    padding: 34px 28px;
+    text-align: center;
+    background: #fff9e9;
+    border: 2px solid #ead39b;
+    border-radius: 25px;
+    box-shadow: 0 18px 55px rgba(55, 42, 22, 0.22);
+    animation: popupAppear 0.25s ease-out;
+}
+
+.delete-modal-flower {
+    font-size: 48px;
+    margin-bottom: 12px;
+    animation: flowerWiggle 1.5s ease-in-out infinite;
+}
+
+.delete-modal-card h2 {
+    margin: 0 0 12px;
+    color: #493719;
+    font-family: Georgia, serif;
+    font-size: 27px;
+}
+
+.delete-modal-card p {
+    margin: 0 0 26px;
+    color: #79664a;
+    font-size: 15px;
+    line-height: 1.7;
+}
+
+.delete-modal-actions {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.delete-modal-actions button {
+    padding: 12px 16px;
+    border: none;
+    border-radius: 14px;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.delete-modal-actions button:hover {
+    transform: translateY(-2px);
+}
+
+.delete-cancel {
+    background: #f1e4c5;
+    color: #594322;
+}
+
+.delete-cancel:hover {
+    background: #e9d7ab;
+}
+
+.delete-confirm {
+    background: #c85f4c;
+    color: white;
+}
+
+.delete-confirm:hover {
+    background: #b94c3a;
+}
+
+@keyframes popupAppear {
+    from {
+        opacity: 0;
+        transform: translateY(12px) scale(0.96);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes flowerWiggle {
+    0%, 100% {
+        transform: rotate(-5deg);
+    }
+    50% {
+        transform: rotate(5deg);
+    }
+}
+
+@media (max-width: 420px) {
+    .delete-modal-card {
+        padding: 28px 18px;
+    }
+
+    .delete-modal-actions {
+        flex-direction: column;
+    }
+
+    .delete-modal-actions button {
+        width: 100%;
+    }
+}
+
+/* ZenNotes search bar */
+.search-form {
+    width: 100%;
+    margin: 24px 0;
+}
+
+.search-input-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    padding: 8px 10px 8px 16px;
+    background: #fffaf0;
+    border: 1.5px solid #e5cf98;
+    border-radius: 18px;
+    box-shadow: 0 4px 14px rgba(94, 70, 25, 0.06);
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.search-input-wrapper:focus-within {
+    border-color: #c99e43;
+    box-shadow: 0 0 0 4px rgba(201, 158, 67, 0.14);
+}
+
+.search-icon {
+    color: #a98135;
+    font-size: 27px;
+    line-height: 1;
+    flex-shrink: 0;
+}
+
+.search-input-wrapper input {
+    flex: 1;
+    min-width: 0;
+    padding: 11px 0;
+    border: none;
+    outline: none;
+    background: transparent;
+    color: #493719;
+    font-family: inherit;
+    font-size: 15px;
+}
+
+.search-input-wrapper input::placeholder {
+    color: #b4a486;
+}
+
+.search-button {
+    padding: 11px 19px;
+    border: none;
+    border-radius: 12px;
+    background: #e8c66f;
+    color: #493719;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.search-button:hover {
+    background: #dfb951;
+    transform: translateY(-1px);
+}
+
+.clear-search {
+    color: #987532;
+    font-size: 13px;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+.clear-search:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 480px) {
+    .search-input-wrapper {
+        gap: 7px;
+        padding-left: 11px;
+    }
+
+    .search-button {
+        padding: 10px 12px;
+    }
+}
+
+/* Highlight notes that match a search */
+.note-card.search-match {
+    background: #fff4cf;
+    border: 2px solid #d5aa4f;
+    box-shadow: 0 0 0 4px rgba(213, 170, 79, 0.18),
+                0 10px 25px rgba(94, 70, 25, 0.12);
+    animation: searchHighlight 1.2s ease-in-out;
+}
+
+@keyframes searchHighlight {
+    0% {
+        transform: scale(0.98);
+        box-shadow: 0 0 0 0 rgba(213, 170, 79, 0.4);
+    }
+    100% {
+        transform: scale(1);
+        box-shadow: 0 0 0 4px rgba(213, 170, 79, 0.18),
+                    0 10px 25px rgba(94, 70, 25, 0.12);
+    }
+}
+
+/* Tiny sunflower details inside ZenNotes cards */
+.note-card,
+.welcome-card,
+.editor-card,
+.empty-notes {
+    position: relative;
+}
+
+/* Reuse the same sunflower image in each card */
+.note-card::after,
+.welcome-card::after,
+.editor-card::after,
+.empty-notes::after {
+    content: "";
+    position: absolute;
+    right: 12px;
+    bottom: 10px;
+    width: 100px;
+    height: 100px;
+    background-image: url("/static/images/sunflower-doodle.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    opacity: 0.75;
+    pointer-events: none;
+}
+
+/* Flower favorite button */
+.note-card-actions {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    flex-shrink: 0;
+}
+
+.favorite-form {
+    display: flex;
+    align-items: center;
+    margin: 0;
+}
+
+.favorite-button {
+    width: 34px;
+    height: 34px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    border-radius: 50%;
+    background: transparent;
+    color: #b5a17c;
+    font-size: 25px;
+    line-height: 1;
+    cursor: pointer;
+    transition: background 0.2s ease,
+                color 0.2s ease,
+                transform 0.2s ease;
+}
+
+.favorite-button:hover {
+    background: #f7ebc9;
+    color: #c99d36;
+    transform: scale(1.12);
+}
+
+/* Golden flower when a note is favorited */
+.favorite-button.is-favorite {
+    background: #fff0bf;
+    color: #c18d22;
+    text-shadow: 0 0 8px rgba(193, 141, 34, 0.25);
+}
+
+.favorite-button.is-favorite:hover {
+    background: #f5e2a5;
+    color: #a97512;
+}
+
+/* Welcome page buttons */
+.welcome-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+    width: 100%;
+    max-width: 330px;
+    margin: 24px auto;
+}
+
+.welcome-actions .create-button,
+.welcome-actions .welcome-login-button {
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-height: 50px;
+    padding: 14px 20px;
+    border-radius: 15px;
+    text-align: center;
+    text-decoration: none;
+    font-family: inherit;
+    font-size: 15px;
+    transition: background 0.2s ease,
+                transform 0.2s ease,
+                box-shadow 0.2s ease;
+}
+
+/* Login link in its own outlined box */
+.welcome-actions .welcome-login-button {
+    background: #fffaf0;
+    color: #684d24;
+    border: 1.5px solid #dfc58b;
+    font-weight: 600;
+    box-shadow: 0 3px 10px rgba(94, 70, 25, 0.05);
+}
+
+.welcome-actions .welcome-login-button:hover {
+    background: #fed468;
+    border-color: #c9a34c;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 14px rgba(94, 70, 25, 0.1);
+}
+
+/* Logged-in user's account actions */
+.account-actions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin-left: auto;
+}
+
+.welcome-user {
+    color: #684d24;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+/* Logout form */
+.account-actions form {
+    margin: 0;
+}
+
+/* Cream and gold logout button */
+.logout-button {
+    padding: 9px 16px;
+    border: 1.5px solid #dfc58b;
+    border-radius: 13px;
+    background: #fffaf0;
+    color: #684d24;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s ease,
+                transform 0.2s ease,
+                border-color 0.2s ease;
+}
+
+.logout-button:hover {
+    background: #f7e8bf;
+    border-color: #c9a34c;
+    transform: translateY(-1px);
+}
+
+/* Header layout on smaller screens */
+.site-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+@media (max-width: 480px) {
+    .account-actions {
+        gap: 8px;
+    }
+
+    .welcome-user {
+        font-size: 12px;
+    }
+
+    .logout-button {
+        padding: 8px 11px;
+        font-size: 12px;
+    }
+}
+
+/* Move the account greeting and logout button lower */
+.account-actions {
+    position: relative;
+    top: 80px;
+}
+/* Adjust sunflower position on the Login page only */
+.login-page .sunflower-top {
+    transform: translateY(45px);
+}
+
+.login-page .sunflower-bottom {
+    transform: translateY(45px);
+}
+
+/* Move only the small sunflower inside the login box */
+.login-page .login-card::after {
+    bottom: -25px;
+}
+
+/* Keep the big corner sunflowers in their original positions */
+.login-page .sunflower-top,
+.login-page .sunflower-bottom {
+    transform: none;
+}
+
+/* Dashboard navigation */
+.dashboard-nav {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+/* Your Notes navigation link */
+.dashboard-nav-link {
+    position: relative;
+    top: 35px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 17px;
+    border: 1.5px solid #dfc58b;
+    border-radius: 14px;
+    background: #fffaf0;
+    color: #684d24;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background 0.2s ease,
+                transform 0.2s ease;
+}
+
+.dashboard-nav-link:hover {
+    background: #f7e8bf;
+    transform: translateY(-2px);
+}
+
+.dashboard-nav-link[aria-current="page"] {
+    background: #f5dfa3;
+    border-color: #d5b467;
+}
+
+/* Personalized dashboard greeting */
+.dashboard-greeting {
+    margin: 8px 0 26px;
+    color: #493719;
+    font-family: Georgia, serif;
+    font-size: 25px;
+    font-weight: 600;
+    line-height: 1.5;
+}
+
+.dashboard-greeting span {
+    display: block;
+    margin-top: 5px;
+    color: #806a45;
+    font-family: inherit;
+    font-size: 15px;
+    font-weight: 400;
+}
+
+/* Responsive layout */
+@media (max-width: 650px) {
+    .dashboard-nav {
+        gap: 8px;
+    }
+
+    .dashboard-nav-link {
+        padding: 8px 11px;
+        font-size: 12px;
+    }
+
+    .dashboard-greeting {
+        font-size: 21px;
+    }
+}
+
+/* Stack Your Notes directly above the account actions */
+.dashboard-nav {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: center;
+    gap: 8px;
+    position: relative;
+    top: 35px;
+}
+
+/* Align the Your Notes link with the account box */
+.dashboard-nav-link {
+    position: static;
+}
+
+/* Keep the greeting and logout button together */
+.account-actions {
+    position: static;
+    margin-left: 0;
+}
+
+/* Clearly highlighted favorite flower */
+.favorite-button.is-favorite {
+    background: #ffe49a;
+    color: #b87908;
+    border: 1.5px solid #e2b94f;
+    box-shadow: 0 0 0 3px rgba(226, 185, 79, 0.22),
+                0 3px 10px rgba(184, 121, 8, 0.18);
+    text-shadow: 0 0 5px rgba(184, 121, 8, 0.3);
+    transform: scale(1.12);
+}
+
+/* Gentle glow when hovering over a favorited flower */
+.favorite-button.is-favorite:hover {
+    background: #ffda70;
+    color: #9b6200;
+    box-shadow: 0 0 0 4px rgba(226, 185, 79, 0.3);
+    transform: scale(1.18);
+}
+
+/* Cute category label on each note card */
+.note-category-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    width: fit-content;
+    max-width: 100%;
+    margin: 7px 0 10px;
+    padding: 5px 11px;
+    border: 1px solid #e8d6a9;
+    border-radius: 20px;
+    background: #fff4d7;
+    color: #765923;
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1.4;
+    overflow-wrap: anywhere;
+}
+
+.category-flower {
+    color: #c49a3a;
+    font-size: 14px;
+    flex-shrink: 0;
+}
+
+/* Keep category tags and note text comfortably spaced */
+.note-card .note-category-tag + .note-content {
+    margin-top: 0;
+}
+
+/* Compact search controls for ZenNotes */
+.notes-toolbar {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin: 20px 0;
+}
+
+.search-tools {
+    position: relative;
+}
+
+.search-toggle-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 10px 17px;
+    border: 1.5px solid #dfc58b;
+    border-radius: 14px;
+    background: #fffaf0;
+    color: #684d24;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.search-toggle-button:hover {
+    background: #f7e8bf;
+    transform: translateY(-1px);
+}
+
+.search-toggle-icon {
+    font-size: 20px;
+    line-height: 1;
+}
+
+/* Search field stays hidden until the button is clicked */
+.search-panel {
+    display: none;
+    position: absolute;
+    top: calc(100% + 9px);
+    left: 0;
+    z-index: 50;
+    width: min(390px, calc(100vw - 40px));
+    padding: 8px;
+    border: 1px solid #e5cf98;
+    border-radius: 17px;
+    background: #fffaf0;
+    box-shadow: 0 10px 28px rgba(65, 48, 15, 0.14);
+}
+
+.search-panel.is-open {
+    display: block;
+    animation: searchPanelAppear 0.18s ease-out;
+}
+
+.search-panel .search-form {
+    width: 100%;
+    margin: 0;
+}
+
+.search-panel .search-input-wrapper {
+    box-sizing: border-box;
+    width: 100%;
+    gap: 7px;
+    padding: 6px 8px 6px 12px;
+    border-radius: 12px;
+    box-shadow: none;
+}
+
+.search-panel .search-input-wrapper input {
+    width: 100%;
+    min-width: 0;
+    font-size: 14px;
+}
+
+.search-panel .search-button {
+    padding: 9px 12px;
+    border-radius: 10px;
+    font-size: 13px;
+}
+
+.search-close-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 29px;
+    height: 29px;
+    flex-shrink: 0;
+    border: none;
+    border-radius: 50%;
+    background: transparent;
+    color: #806a45;
+    font-size: 21px;
+    cursor: pointer;
+}
+
+.search-close-button:hover {
+    background: #f1e3bf;
+}
+
+.favorite-filter-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    border: 1.5px solid #dfc58b;
+    border-radius: 14px;
+    background: #fffaf0;
+    color: #b5a17c;
+    font-size: 23px;
+    text-decoration: none;
+    transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
+}
+
+.favorite-filter-toggle:hover {
+    background: #fff0c9;
+    color: #b87908;
+    transform: translateY(-1px);
+}
+
+.favorite-filter-toggle.is-active {
+    background: #ffe49a;
+    color: #b87908;
+    border-color: #e2b94f;
+    box-shadow: 0 0 0 3px rgba(226, 185, 79, 0.18);
+}
+
+@keyframes searchPanelAppear {
+    from {
+        opacity: 0;
+        transform: translateY(-5px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (max-width: 480px) {
+    .search-panel {
+        width: min(340px, calc(100vw - 32px));
+    }
+}
+
+/* Pretty ZenNotes category filter */
+.category-filter-form {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin: 16px 0 24px;
+    padding: 14px 17px;
+    background: #fffaf0;
+    border: 1.5px solid #e5cf98;
+    border-radius: 18px;
+    box-shadow: 0 4px 14px rgba(94, 70, 25, 0.05);
+}
+
+.category-filter-form label {
+    color: #684d24;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+/* Rounded golden dropdown */
+.category-filter-form select {
+    box-sizing: border-box;
+    min-width: 180px;
+    max-width: 100%;
+    padding: 11px 38px 11px 14px;
+    border: 1.5px solid #dfc58b;
+    border-radius: 13px;
+    background-color: #fff4d7;
+    color: #684d24;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    outline: none;
+    transition: border-color 0.2s ease,
+                box-shadow 0.2s ease,
+                background 0.2s ease;
+}
+
+.category-filter-form select:hover {
+    background-color: #ffefc8;
+    border-color: #c9a34c;
+}
+
+.category-filter-form select:focus {
+    border-color: #c9a34c;
+    box-shadow: 0 0 0 4px rgba(201, 163, 76, 0.16);
+}
+
+.category-filter-form select option {
+    background: #fffaf0;
+    color: #493719;
+    padding: 10px;
+}
+
+/* Small-screen layout */
+@media (max-width: 480px) {
+    .category-filter-form {
+        align-items: stretch;
+        flex-direction: column;
+        gap: 9px;
+        padding: 13px;
+    }
+
+    .category-filter-form select {
+        width: 100%;
+        min-width: 0;
+    }
+}
+
+.zen-pin-icon {
+    color: #C69A35;
+    vertical-align: middle;
+    transition: transform 0.2s ease;
+}
+
+button:hover .zen-pin-icon {
+    transform: rotate(-10deg);
+}

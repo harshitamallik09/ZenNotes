@@ -1,0 +1,130 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Log In | ZenNotes</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body class="login-page">
+
+    <!-- ZenNotes header -->
+    <header class="site-header">
+        <div class="logo-box">
+            <h1>ZenNotes</h1>
+        </div>
+    </header>
+
+    <!-- Sunflower decorations -->
+    <img
+        src="{{ url_for('static', filename='images/sunflower-doodle.png') }}"
+        class="sunflower sunflower-top"
+        alt="Sunflower decoration"
+    >
+
+    <img
+        src="{{ url_for('static', filename='images/sunflower-doodle.png') }}"
+        class="sunflower sunflower-bottom"
+        alt="Sunflower decoration"
+    >
+
+    <!-- Success and error messages -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <div class="toast-container">
+                {% for category, message in messages %}
+                    <div class="toast toast-{{ category }}">
+                        <span class="toast-icon">✿</span>
+                        <span>{{ message }}</span>
+
+                        <button
+                            type="button"
+                            class="toast-close"
+                            onclick="this.parentElement.remove()"
+                            aria-label="Close message"
+                        >&times;</button>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+
+    <!-- Login form -->
+    <main class="editor-main">
+
+        <section class="editor-card login-card">
+
+            <div class="delete-modal-flower">🌻</div>
+
+            <h2 class="editor-heading">Welcome back!</h2>
+
+            <p class="editor-subtitle">
+                Your little garden of thoughts is waiting for you.
+            </p>
+
+            
+<form action="{{ url_for('login') }}"
+      method="POST"
+      class="note-form">
+
+    <input
+        type="hidden"
+        name="csrf_token"
+        value="{{ csrf_token() }}"
+    >
+
+
+                <div class="form-group">
+                    <label for="identifier">Username or email</label>
+
+                    <input
+                        type="text"
+                        id="identifier"
+                        name="identifier"
+                        placeholder="Enter your username or email"
+                        autocomplete="username"
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+
+                    <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        placeholder="Enter your password"
+                        autocomplete="current-password"
+                        required
+                    >
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="save-button">
+                        Log in ✿
+                    </button>
+                </div>
+
+            </form>
+
+            <p class="signup-login-link">
+                New to ZenNotes?
+                <a href="{{ url_for('signup') }}">Create an account</a>
+            </p>
+
+        </section>
+
+    </main>
+
+    <footer>
+        <p>Made with care and a little sunshine ☀</p>
+    </footer>
+
+</body>
+</html>

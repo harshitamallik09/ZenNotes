@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Note | ZenNotes</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <header class="site-header">
+        <div class="logo-box">
+            <h1>ZenNotes</h1>
+        </div>
+    </header>
+
+    
+<img src="{{ url_for('static', filename='images/sunflower-doodle.png') }}"
+     class="sunflower sunflower-top"
+     alt="Sunflower decoration">
+
+<img src="{{ url_for('static', filename='images/sunflower-doodle.png') }}"
+     class="sunflower sunflower-bottom"
+     alt="Sunflower decoration">
+
+    <main class="editor-main">
+
+        <a href="{{ url_for('home') }}" class="back-link">
+            ← Back to home
+        </a>
+
+        <section class="editor-card">
+
+            <h2 class="editor-heading">Edit your thoughts ✿</h2>
+
+            <p class="editor-subtitle">
+                Every thought deserves a little space to grow.
+            </p>
+
+            <form
+                action="{{ url_for('edit_note', note_id=note['id']) }}"
+                method="POST"
+                class="note-form"
+            >
+            <input
+                type="hidden"
+                name="csrf_token"
+                value="{{ csrf_token() }}"
+            >
+
+                <div class="form-group">
+                    <label for="title">Note title</label>
+
+                    <input
+                        type="text"
+                        id="title"
+                        name="title"
+                        value="{{ note['title'] }}"
+                        placeholder="Give your note a title..."
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="content">Your thoughts</label>
+
+                    <textarea
+                        id="content"
+                        name="content"
+                        rows="10"
+                        placeholder="Write your thoughts here..."
+                        required
+                    >{{ note['content'] }}</textarea>
+                </div>
+
+                <div class="form-actions">
+                    <a href="{{ url_for('home') }}"
+                       class="cancel-button">
+                        Cancel
+                    </a>
+
+                    <button type="submit" class="save-button">
+                        Save changes ✿
+                    </button>
+                </div>
+
+            </form>
+
+        </section>
+
+    </main>
+
+    <footer>
+        <p>Made with care and a little sunshine ☀</p>
+    </footer>
+
+</body>
+</html>

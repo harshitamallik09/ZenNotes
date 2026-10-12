@@ -1,0 +1,157 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Sign Up | ZenNotes</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <!-- ZenNotes header -->
+    <header class="site-header">
+        <div class="logo-box">
+            <h1>ZenNotes</h1>
+        </div>
+    </header>
+
+    <!-- Sunflower decorations -->
+    <img
+        src="{{ url_for('static', filename='images/sunflower-doodle.png') }}"
+        class="sunflower sunflower-top"
+        alt="Sunflower decoration"
+    >
+
+    <img
+        src="{{ url_for('static', filename='images/sunflower-doodle.png') }}"
+        class="sunflower sunflower-bottom"
+        alt="Sunflower decoration"
+    >
+
+    <!-- Flash messages -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <div class="toast-container">
+                {% for category, message in messages %}
+                    <div class="toast toast-{{ category }}">
+                        <span class="toast-icon">✿</span>
+                        <span>{{ message }}</span>
+
+                        <button
+                            type="button"
+                            class="toast-close"
+                            onclick="this.parentElement.remove()"
+                            aria-label="Close message"
+                        >&times;</button>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+
+    <!-- Sign up form -->
+    <main class="editor-main">
+
+        <section class="editor-card signup-card">
+
+            <div class="delete-modal-flower">🌻</div>
+
+            <h2 class="editor-heading">Create your little space</h2>
+
+            <p class="editor-subtitle">
+                A fresh page, a little sunshine, and room for your thoughts.
+            </p>
+
+           <form action="{{ url_for('signup') }}"
+      method="POST"
+      class="note-form">
+
+    <input
+        type="hidden"
+        name="csrf_token"
+        value="{{ csrf_token() }}"
+    >
+                <div class="form-group">
+                    <label for="username">Username</label>
+
+                    <input
+                        type="text"
+                        id="username"
+                        name="username"
+                        placeholder="Choose a username"
+                        autocomplete="username"
+                        minlength="3"
+                        maxlength="30"
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email address</label>
+
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        placeholder="you@example.com"
+                        autocomplete="email"
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+
+                    <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        placeholder="At least 8 characters"
+                        autocomplete="new-password"
+                        minlength="8"
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="confirm_password">Confirm password</label>
+
+                    <input
+                        type="password"
+                        id="confirm_password"
+                        name="confirm_password"
+                        placeholder="Enter your password again"
+                        autocomplete="new-password"
+                        minlength="8"
+                        required
+                    >
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="save-button">
+                        Create my account ✿
+                    </button>
+                </div>
+
+            </form>
+
+            <p class="signup-login-link">
+                Already have an account?
+                <a href="{{ url_for('login') }}">Log in here</a>
+            </p>
+
+        </section>
+
+    </main>
+
+    <footer>
+        <p>Made with care and a little sunshine ☀</p>
+    </footer>
+
+</body>
+</html>

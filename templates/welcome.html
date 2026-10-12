@@ -1,0 +1,86 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Welcome to ZenNotes 🌻</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <!-- Header -->
+    <header class="site-header">
+        <div class="logo-box">
+            <h1>ZenNotes</h1>
+        </div>
+    </header>
+
+    <!-- Sunflower decorations -->
+    <img
+        src="{{ url_for('static', filename='images/sunflower-doodle.png') }}"
+        class="sunflower sunflower-top"
+        alt="Sunflower decoration"
+    >
+
+    <img
+        src="{{ url_for('static', filename='images/sunflower-doodle.png') }}"
+        class="sunflower sunflower-bottom"
+        alt="Sunflower decoration"
+    >
+
+    <main>
+
+        <!-- Welcome section -->
+        <section class="welcome-card">
+
+            <p class="welcome-label">
+                A LITTLE SPACE JUST FOR YOU ✿
+            </p>
+
+            <h2>
+                Your thoughts deserve
+                a place to bloom.
+            </h2>
+
+            <p>
+                Save your ideas, collect little memories,
+                and keep the thoughts that make you,
+                you.
+            </p>
+
+            <div class="welcome-actions">
+
+                <a href="{{ url_for('signup') }}"
+                   class="create-button">
+                    Create your account ✿
+                </a>
+
+                <a href="{{ url_for('login') }}"
+                   class="welcome-login-button">
+                    I already have an account
+                </a>
+
+            </div>
+
+            <div class="welcome-flower-divider">
+                ✿ &nbsp; 🌻 &nbsp; ✿
+            </div>
+
+        </section>
+
+        <!-- Features section -->
+        
+
+    </main>
+
+    <footer>
+        <p>Made with care and a little sunshine ☀</p>
+    </footer>
+
+</body>
+</html>

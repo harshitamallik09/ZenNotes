@@ -1,0 +1,1050 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>ZenNotes | A Little Space for Your Thoughts</title>
+
+    <link rel="stylesheet"
+
+          href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+    <!-- Dashboard header -->
+
+    <header class="site-header">
+
+        <div class="logo-box">
+
+            <h1>ZenNotes</h1>
+
+        </div>
+
+        <nav class="dashboard-nav">
+
+            <div class="account-actions">
+
+                <span class="welcome-user">
+
+                    Hi, {{ session.get('username', 'friend') }} ✿
+
+                </span>
+
+                <!-- CSRF token for Logout -->
+
+                <form action="{{ url_for('logout') }}" method="POST">
+
+                    <input type="hidden"
+
+                           name="csrf_token"
+
+                           value="{{ csrf_token() }}">
+
+                    <button type="submit" class="logout-button">
+
+                        Log out
+
+                    </button>
+
+                </form>
+
+            </div>
+
+        </nav>
+
+    </header>
+
+    <!-- Sunflower decorations -->
+
+    <img
+
+        src="{{ url_for('static', filename='images/sunflower-doodle.png') }}"
+
+        class="sunflower sunflower-top"
+
+        alt="Hand-drawn sunflower">
+
+    <img
+
+        src="{{ url_for('static', filename='images/sunflower-doodle.png') }}"
+
+        class="sunflower sunflower-bottom"
+
+        alt="Hand-drawn sunflower">
+
+    <!-- Flash messages -->
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+
+        {% if messages %}
+
+            <div class="toast-container">
+
+                {% for category, message in messages %}
+
+                    <div class="toast toast-{{ category }}">
+
+                        <span class="toast-icon">✿</span>
+
+                        <span>{{ message }}</span>
+
+                        <button
+
+                            type="button"
+
+                            class="toast-close"
+
+                            onclick="this.parentElement.remove()"
+
+                            aria-label="Close message">
+
+                            &times;
+
+                        </button>
+
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+        {% endif %}
+
+    {% endwith %}
+
+    <main>
+
+        <!-- Welcome section -->
+
+        <section class="welcome-card">
+
+            <h2>A little space for your thoughts.</h2>
+
+            <p>
+
+                Capture your ideas, keep your moments,
+
+                and let your thoughts bloom.
+
+            </p>
+
+            <a href="{{ url_for('add_note') }}"
+
+               class="create-button">
+
+                Start writing ✿
+
+            </a>
+
+        </section>
+
+        <!-- Notes section -->
+
+        <section class="notes-section">
+
+            <p class="dashboard-greeting">
+
+                Welcome back, {{ session.get('username', 'friend') }}! 🌻
+
+                <span>Your little garden is ready to bloom.</span>
+
+            </p>
+
+            <div class="notes-heading">
+
+                <div>
+
+                    <h2>Your little garden of thoughts</h2>
+
+                    <p>A collection of things worth remembering.</p>
+
+                </div>
+
+                <a href="{{ url_for('add_note') }}"
+
+                   class="small-add-button">
+
+                    + New note
+
+                </a>
+
+            </div>
+
+            <!-- Compact Search, Favorites and Category toolbar -->
+
+            <div class="notes-toolbar">
+
+                <!-- Search button -->
+
+                <div class="search-tools">
+
+                    <button
+
+                        type="button"
+
+                        id="searchToggle"
+
+                        class="search-toggle-button"
+
+                        aria-controls="searchPanel"
+
+                        aria-expanded="{{ 'true' if search_query else 'false' }}"
+
+                        onclick="toggleSearchPanel()">
+
+                        <span class="search-toggle-icon">⌕</span>
+
+                        Search
+
+                    </button>
+
+                    <!-- Expandable search panel -->
+
+                    <div
+
+                        id="searchPanel"
+
+                        class="search-panel {% if search_query %}is-open{% endif %}">
+
+                        <form
+
+                            class="search-form"
+
+                            action="{{ url_for('home') }}"
+
+                            method="GET">
+
+                            {% if favorites_only %}
+
+                                <input type="hidden"
+
+                                       name="favorites"
+
+                                       value="1">
+
+                            {% endif %}
+
+                            {% if selected_category %}
+
+                                <input type="hidden"
+
+                                       name="category"
+
+                                       value="{{ selected_category }}">
+
+                            {% endif %}
+
+                            <div class="search-input-wrapper">
+
+                                <span class="search-icon">⌕</span>
+
+                                <input
+
+                                    type="text"
+
+                                    id="searchInput"
+
+                                    name="q"
+
+                                    value="{{ search_query }}"
+
+                                    placeholder="Find a thought..."
+
+                                    aria-label="Search notes">
+
+                                <button type="submit"
+
+                                        class="search-button">
+
+                                    Go
+
+                                </button>
+
+                                {% if search_query %}
+
+                                    <a
+
+                                        href="{{ url_for('home', favorites=1 if favorites_only else None, category=selected_category if selected_category else None) }}"
+
+                                        class="clear-search">
+
+                                        Clear
+
+                                    </a>
+
+                                {% endif %}
+
+                                <button
+
+                                    type="button"
+
+                                    class="search-close-button"
+
+                                    onclick="closeSearchPanel()"
+
+                                    aria-label="Close search">
+
+                                    &times;
+
+                                </button>
+
+                            </div>
+
+                        </form>
+
+                    </div>
+
+                </div>
+
+                <!-- Flower Favorites filter -->
+
+                {% if favorites_only %}
+
+                    <a
+
+                        href="{{ url_for('home', q=search_query if search_query else None, category=selected_category if selected_category else None) }}"
+
+                        class="favorite-filter-toggle is-active"
+
+                        title="Show all notes"
+
+                        aria-label="Show all notes"
+
+                        aria-pressed="true">✿</a>
+
+                {% else %}
+
+                    <a
+
+                        href="{{ url_for('home', favorites=1, q=search_query if search_query else None, category=selected_category if selected_category else None) }}"
+
+                        class="favorite-filter-toggle"
+
+                        title="Show favorite notes only"
+
+                        aria-label="Show favorite notes only"
+
+                        aria-pressed="false">✿</a>
+
+                {% endif %}
+
+                <!-- Category dropdown on the same toolbar -->
+
+                <form
+
+                    class="category-filter-form"
+
+                    action="{{ url_for('home') }}"
+
+                    method="GET">
+
+                    {% if search_query %}
+
+                        <input type="hidden"
+
+                               name="q"
+
+                               value="{{ search_query }}">
+
+                    {% endif %}
+
+                    {% if favorites_only %}
+
+                        <input type="hidden"
+
+                               name="favorites"
+
+                               value="1">
+
+                    {% endif %}
+
+                    <label for="categoryFilter">Category</label>
+
+                    <select
+
+                        id="categoryFilter"
+
+                        name="category"
+
+                        onchange="this.form.submit()">
+
+                        <option
+
+                            value=""
+
+                            {% if not selected_category %}selected{% endif %}>
+
+                            All
+
+                        </option>
+
+                        {% for category in categories %}
+
+                            <option
+
+                                value="{{ category }}"
+
+                                {% if selected_category == category %}selected{% endif %}>
+
+                                {{ category }}
+
+                            </option>
+
+                        {% endfor %}
+
+                    </select>
+
+                </form>
+
+            </div>
+
+            <!-- Notes list -->
+
+            {% if notes %}
+
+                <div class="notes-grid">
+
+                    {% for note in notes %}
+
+                        <article
+
+                            class="note-card {% if search_query %}search-match{% endif %}"
+
+                            onclick="openNote(event, this.dataset.noteId)"
+
+                            data-note-id="{{ note['id'] }}"
+
+                            role="link"
+
+                            tabindex="0">
+
+                            <!-- Note header -->
+
+                            <div class="note-card-header">
+
+                                <!-- Favorite flower -->
+
+                                <form
+
+                                    action="{{ url_for('toggle_favorite', note_id=note['id']) }}"
+
+                                    method="POST"
+
+                                    class="favorite-form"
+
+                                    onclick="event.stopPropagation();">
+
+                                    <!-- CSRF token for Favorites -->
+
+                                    <input type="hidden"
+
+                                           name="csrf_token"
+
+                                           value="{{ csrf_token() }}">
+
+                                    <!-- Preserve search -->
+
+                                    <input type="hidden"
+
+                                           name="q"
+
+                                           value="{{ search_query }}">
+
+                                    <!-- Preserve active Favorites filter -->
+
+                                    {% if favorites_only %}
+
+                                        <input type="hidden"
+
+                                               name="favorites"
+
+                                               value="1">
+
+                                    {% endif %}
+
+                                    <!-- Preserve selected category -->
+
+                                    {% if selected_category %}
+
+                                        <input type="hidden"
+
+                                               name="category"
+
+                                               value="{{ selected_category }}">
+
+                                    {% endif %}
+
+                                    <button
+
+                                        type="submit"
+
+                                        class="favorite-button {% if note['is_favorite'] %}is-favorite{% endif %}"
+
+                                        aria-label="{% if note['is_favorite'] %}Remove from favorites{% else %}Add to favorites{% endif %}"
+
+                                        aria-pressed="{{ 'true' if note['is_favorite'] else 'false' }}"
+
+                                        title="{% if note['is_favorite'] %}Remove from favorites{% else %}Add to favorites{% endif %}">
+
+                                        ✿
+
+                                    </button>
+
+                                </form>
+                                
+                                <!-- Pin or unpin this note -->
+                                <form
+                                    action="{{ url_for('toggle_pin', note_id=note['id']) }}"
+                                    method="POST"
+                                    class="favorite-form"
+                                    onclick="event.stopPropagation();">
+
+                                    <!-- CSRF protection -->
+                                    <input type="hidden"
+                                           name="csrf_token"
+                                           value="{{ csrf_token() }}">
+
+                                    <!-- Preserve search -->
+                                    <input type="hidden"
+                                           name="q"
+                                           value="{{ search_query }}">
+
+                                    <!-- Preserve Favorites filter -->
+                                    {% if favorites_only %}
+                                        <input type="hidden"
+                                               name="favorites"
+                                               value="1">
+                                    {% endif %}
+
+                                    <!-- Preserve category filter -->
+                                    {% if selected_category %}
+                                        <input type="hidden"
+                                               name="category"
+                                               value="{{ selected_category }}">
+                                    {% endif %}
+
+                                    <button
+                                        type="submit"
+                                        class="favorite-button {% if note['pinned'] %}is-favorite{% endif %}"
+                                        aria-label="{% if note['pinned'] %}Unpin note{% else %}Pin note{% endif %}"
+                                        title="{% if note['pinned'] %}Unpin note{% else %}Pin note{% endif %}">
+                                        
+<svg class="zen-pin-icon"
+     viewBox="0 0 24 24"
+     width="19"
+     height="19"
+     fill="none"
+     stroke="currentColor"
+     stroke-width="1.6"
+     stroke-linecap="round"
+     stroke-linejoin="round"
+     aria-hidden="true">
+    <path d="M8 3.5h8l-1 5 3 3v2H6v-2l3-3-1-5Z"/>
+    <path d="M12 13.5v7"/>
+</svg>
+
+                                    </button>
+                                </form>
+
+
+                                <!-- Note date -->
+
+                                <p class="note-date">
+
+                                    {{ note["created_at"][:10] if note["created_at"] else "" }}
+
+                                </p>
+
+                                <!-- Three-dot menu -->
+
+                                <div class="note-menu-wrapper">
+
+                                    <button
+
+                                        type="button"
+
+                                        class="note-menu-button"
+
+                                        aria-label="Note options"
+
+                                        aria-expanded="false"
+
+                                        onclick="toggleNoteMenu(event, this)">
+
+                                        ⋮
+
+                                    </button>
+
+                                    <div class="note-menu">
+
+                                        <!-- Edit note -->
+
+                                        <a
+
+                                            href="{{ url_for('edit_note', note_id=note['id']) }}"
+
+                                            class="note-menu-item"
+
+                                            onclick="event.stopPropagation();"
+
+                                            style="text-decoration: none;">
+
+                                            ✏️ Edit note
+
+                                        </a>
+
+                                        <!-- Delete note -->
+
+                                        <form
+
+                                            action="{{ url_for('delete_note', note_id=note['id']) }}"
+
+                                            method="POST">
+
+                                            <!-- CSRF token for Delete -->
+
+                                            <input type="hidden"
+
+                                                   name="csrf_token"
+
+                                                   value="{{ csrf_token() }}">
+
+                                            <button
+
+                                                type="button"
+
+                                                class="note-menu-item delete-option"
+
+                                                onclick="event.stopPropagation(); openDeleteModal(event, this.form);">
+
+                                                🗑️ Delete note
+
+                                            </button>
+
+                                        </form>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            <!-- Note title -->
+
+                            <h3>{{ note["title"] }}</h3>
+
+                            <!-- Category label -->
+
+                            <div class="note-category-tag">
+
+                                <span class="category-flower">✿</span>
+
+                                <span>{{ note["category"] or "Personal" }}</span>
+
+                            </div>
+
+                            <!-- Note content -->
+
+                            <p class="note-content">
+
+                                {{ note["content"] }}
+
+                            </p>
+
+                        </article>
+
+                    {% endfor %}
+
+                </div>
+
+            {% else %}
+
+                <!-- Empty state -->
+
+                <div class="empty-notes">
+
+                    <span>🌱</span>
+
+                    {% if search_query and favorites_only %}
+
+                        <h3>No matching favorites found</h3>
+
+                        <p>No favorite notes match "{{ search_query }}".</p>
+
+                    {% elif search_query %}
+
+                        <h3>No matching thoughts found</h3>
+
+                        <p>
+
+                            We couldn't find any notes matching
+
+                            "{{ search_query }}".
+
+                        </p>
+
+                    {% elif favorites_only %}
+
+                        <h3>Your favorite garden is waiting ✿</h3>
+
+                        <p>
+
+                            Mark a note with the little flower
+
+                            to save it here.
+
+                        </p>
+
+                    {% elif selected_category %}
+
+                        <h3>No notes in this category yet</h3>
+
+                        <p>
+
+                            Create a note and choose
+
+                            {{ selected_category }} as its category.
+
+                        </p>
+
+                    {% else %}
+
+                        <h3>Your garden is waiting to bloom</h3>
+
+                        <p>
+
+                            Create your first note and watch your
+
+                            thoughts find a home.
+
+                        </p>
+
+                        <a href="{{ url_for('add_note') }}">
+
+                            Create your first note
+
+                        </a>
+
+                    {% endif %}
+
+                    {% if search_query or favorites_only or selected_category %}
+
+                        <a href="{{ url_for('home') }}">
+
+                            View all notes
+
+                        </a>
+
+                    {% endif %}
+
+                </div>
+
+            {% endif %}
+
+        </section>
+
+    </main>
+
+    <!-- Cute delete confirmation popup -->
+
+    <div
+
+        class="delete-modal"
+
+        id="deleteModal"
+
+        style="display: none;"
+
+        role="dialog"
+
+        aria-modal="true"
+
+        aria-labelledby="deleteModalTitle">
+
+        <div class="delete-modal-card">
+
+            <div class="delete-modal-flower">🌻</div>
+
+            <h2 id="deleteModalTitle">Let this note go?</h2>
+
+            <p>
+
+                Are you sure you want to let this little thought go?
+
+                Once deleted, it won't be coming back. 💛
+
+            </p>
+
+            <div class="delete-modal-actions">
+
+                <button
+
+                    type="button"
+
+                    class="delete-cancel"
+
+                    onclick="closeDeleteModal()">
+
+                    Keep my note 💛
+
+                </button>
+
+                <button
+
+                    type="button"
+
+                    class="delete-confirm"
+
+                    onclick="confirmDelete()">
+
+                    Yes, delete it
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Footer -->
+
+    <footer>
+
+        <p>Made with care and a little sunshine ☀</p>
+
+    </footer>
+
+    <!-- JavaScript -->
+
+    <script>
+
+        // Expand and collapse the search panel
+
+        function toggleSearchPanel() {
+
+            const panel = document.getElementById("searchPanel");
+
+            const toggle = document.getElementById("searchToggle");
+
+            const input = document.getElementById("searchInput");
+
+            const isOpen = panel.classList.toggle("is-open");
+
+            toggle.setAttribute("aria-expanded", String(isOpen));
+
+            if (isOpen) {
+
+                input.focus();
+
+            }
+
+        }
+
+        function closeSearchPanel() {
+
+            const panel = document.getElementById("searchPanel");
+
+            const toggle = document.getElementById("searchToggle");
+
+            panel.classList.remove("is-open");
+
+            toggle.setAttribute("aria-expanded", "false");
+
+        }
+
+        // Delete confirmation popup
+
+        let deleteFormToSubmit = null;
+
+        function openDeleteModal(event, form) {
+
+            event.stopPropagation();
+
+            deleteFormToSubmit = form;
+
+            document.getElementById("deleteModal").style.display = "flex";
+
+        }
+
+        function closeDeleteModal() {
+
+            document.getElementById("deleteModal").style.display = "none";
+
+            deleteFormToSubmit = null;
+
+        }
+
+        function confirmDelete() {
+
+            if (deleteFormToSubmit) {
+
+                deleteFormToSubmit.submit();
+
+            }
+
+        }
+
+        // Close delete popup when clicking outside it
+
+        document.getElementById("deleteModal").addEventListener(
+
+            "click",
+
+            function(event) {
+
+                if (event.target === this) {
+
+                    closeDeleteModal();
+
+                }
+
+            }
+
+        );
+
+        // Open or close the three-dot menu
+
+        function toggleNoteMenu(event, button) {
+
+            event.stopPropagation();
+
+            const currentMenu = button.nextElementSibling;
+
+            const wasOpen = currentMenu.classList.contains("show");
+
+            document.querySelectorAll(".note-menu").forEach(menu => {
+
+                menu.classList.remove("show");
+
+            });
+
+            document.querySelectorAll(".note-menu-button").forEach(btn => {
+
+                btn.setAttribute("aria-expanded", "false");
+
+            });
+
+            if (!wasOpen) {
+
+                currentMenu.classList.add("show");
+
+                button.setAttribute("aria-expanded", "true");
+
+            }
+
+        }
+
+        // Open a note by clicking its card
+
+        function openNote(event, noteId) {
+
+            if (
+
+                event.target.closest(".note-menu-wrapper") ||
+
+                event.target.closest(".favorite-form")
+
+            ) {
+
+                return;
+
+            }
+
+            window.location.href = "/note/" + noteId;
+
+        }
+
+        // Keyboard navigation for note cards
+
+        document.querySelectorAll(".note-card").forEach(card => {
+
+            card.addEventListener("keydown", function(event) {
+
+                if (event.target !== card) {
+
+                    return;
+
+                }
+
+                if (event.key === "Enter" || event.key === " ") {
+
+                    event.preventDefault();
+
+                    window.location.href = "/note/" + card.dataset.noteId;
+
+                }
+
+            });
+
+        });
+
+        // Close menus when clicking outside
+
+        document.addEventListener("click", function(event) {
+
+            if (!event.target.closest(".note-menu-wrapper")) {
+
+                document.querySelectorAll(".note-menu").forEach(menu => {
+
+                    menu.classList.remove("show");
+
+                });
+
+                document.querySelectorAll(".note-menu-button").forEach(btn => {
+
+                    btn.setAttribute("aria-expanded", "false");
+
+                });
+
+            }
+
+        });
+
+        // Escape closes the search and delete popup
+
+        document.addEventListener("keydown", function(event) {
+
+            if (event.key === "Escape") {
+
+                closeSearchPanel();
+
+                closeDeleteModal();
+
+            }
+
+        });
+
+        // Scroll to the first search result
+
+        const firstSearchMatch = document.querySelector(
+
+            ".note-card.search-match"
+
+        );
+
+        if (firstSearchMatch) {
+
+            firstSearchMatch.scrollIntoView({
+
+                behavior: "smooth",
+
+                block: "center"
+
+            });
+
+        }
+
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,56 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{{ note["title"] }} | ZenNotes</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+    <header class="site-header">
+        <a href="{{ url_for('home') }}" class="logo-link">
+            <div class="logo-box">
+                <h1>ZenNotes</h1>
+            </div>
+        </a>
+    </header>
+    
+<img src="{{ url_for('static', filename='images/sunflower-doodle.png') }}"
+     class="sunflower sunflower-top"
+     alt="Sunflower decoration">
+
+<img src="{{ url_for('static', filename='images/sunflower-doodle.png') }}"
+     class="sunflower sunflower-bottom"
+     alt="Sunflower decoration">
+
+
+    <main class="editor-main">
+        <a href="{{ url_for('home') }}" class="back-link">
+            ← Back to your garden
+        </a>
+
+        <article class="editor-card view-note-card">
+            <p class="note-date">
+                {{ note["created_at"][:10] if note["created_at"] else "" }}
+            </p>
+
+            <h2 class="view-note-title">{{ note["title"] }}</h2>
+
+            <div class="view-note-content">{{ note["content"] }}</div>
+        </article>
+
+        <p class="editor-quote">
+            "Good ideas grow in quiet places." ☀
+        </p>
+    </main>
+
+    <footer>
+        <p>Made with care and a little sunshine ☀</p>
+    </footer>
+</body>
+</html>

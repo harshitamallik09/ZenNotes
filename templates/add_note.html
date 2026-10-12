@@ -1,0 +1,179 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Create a Note | ZenNotes</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body class="add-note-page">
+
+    <!-- Header -->
+    <header class="site-header">
+        <a href="{{ url_for('home') }}" class="logo-link">
+            <div class="logo-box">
+                <h1>ZenNotes</h1>
+            </div>
+        </a>
+    </header>
+
+    <!-- Sunflower decorations -->
+    <img
+        src="{{ url_for('static', filename='images/sunflower-doodle.png') }}"
+        class="sunflower sunflower-top"
+        alt="Sunflower decoration"
+    >
+
+    <img
+        src="{{ url_for('static', filename='images/sunflower-doodle.png') }}"
+        class="sunflower sunflower-bottom"
+        alt="Sunflower decoration"
+    >
+
+    <main class="editor-main">
+
+        <a href="{{ url_for('home') }}" class="back-link">
+            ← Back to your garden
+        </a>
+
+        <section class="editor-card">
+
+            <div class="editor-heading">
+                <span class="editor-flower">✿</span>
+                <h2>Let's write something.</h2>
+                <p>A little thought today, a lovely memory tomorrow.</p>
+            </div>
+
+           <form
+            action="{{ url_for('add_note') }}"
+            method="POST"
+            class="note-form"
+>
+            <input
+                type="hidden"
+                name="csrf_token"
+                value="{{ csrf_token() }}"
+            >
+                <!-- Note title -->
+                <div class="form-group">
+                    <label for="title">Give your note a name</label>
+
+                    <input
+                        type="text"
+                        id="title"
+                        name="title"
+                        placeholder="e.g. Little things to remember..."
+                        maxlength="150"
+                        required
+                    >
+                </div>
+
+                <!-- Note category -->
+                <div class="form-group">
+                    <label for="category">Choose a category ✿</label>
+
+                    <select id="category" name="category" required>
+                        <option value="Personal" selected>
+                            🌻 Personal
+                        </option>
+                        <option value="College">
+                            📚 College
+                        </option>
+                        <option value="Ideas">
+                            💡 Ideas
+                        </option>
+                        <option value="Work">
+                            💼 Work
+                        </option>
+                        <option value="Other">
+                            🌼 Other
+                        </option>
+                    </select>
+                    
+<!-- Custom category name: appears when Other is selected -->
+<div class="form-group" id="customCategoryGroup"
+     style="display: none;">
+
+    <label for="custom_category">Name your category ✿</label>
+
+    <input
+        type="text"
+        id="custom_category"
+        name="custom_category"
+        placeholder="e.g. Travel, Books, Hobbies..."
+        maxlength="40"
+    >
+
+</div>
+
+                </div>
+
+                <!-- Note content -->
+                <div class="form-group">
+                    <label for="content">Let your thoughts bloom</label>
+
+                    <textarea
+                        id="content"
+                        name="content"
+                        rows="9"
+                        placeholder="Write whatever is on your mind..."
+                        required
+                    ></textarea>
+                </div>
+
+                <!-- Form buttons -->
+                <div class="form-actions">
+
+                    <a href="{{ url_for('home') }}"
+                       class="cancel-button">
+                        Cancel
+                    </a>
+
+                    <button type="submit" class="save-button">
+                        Save my note ✿
+                    </button>
+
+                </div>
+
+            </form>
+        </section>
+
+        <p class="editor-quote">
+            "Good ideas grow in quiet places." ☀
+        </p>
+
+    </main>
+
+    <footer>
+        <p>Made with care and a little sunshine ☀</p>
+    </footer>
+    
+<script>
+    const categorySelect = document.getElementById("category");
+    const customCategoryGroup = document.getElementById("customCategoryGroup");
+    const customCategoryInput = document.getElementById("custom_category");
+
+    function updateCustomCategory() {
+        const isOther = categorySelect.value === "Other";
+
+        customCategoryGroup.style.display = isOther ? "block" : "none";
+        customCategoryInput.required = isOther;
+
+        if (!isOther) {
+            customCategoryInput.value = "";
+        }
+    }
+
+    categorySelect.addEventListener("change", updateCustomCategory);
+
+    updateCustomCategory();
+</script>
+
+
+</body>
+</html>
